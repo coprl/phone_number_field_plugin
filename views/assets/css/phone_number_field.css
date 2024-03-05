@@ -1,0 +1,9 @@
+.iti {
+  width: 100%;
+}
+
+.iti__search-input {
+  border-radius: unset;
+  caret-color: var(--mdc-theme-primary);
+  outline-color: var(--mdc-theme-primary);
+}
