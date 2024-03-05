@@ -5,11 +5,12 @@ Coprl::Presenters.define(:phone_number_field, namespace: :plugins) do
   plugin :phone_number_field
   page_title 'Phone number field'
 
-  phone_number_field # TODO Add your demo code here
+  phone_number_field name: :phone_number do
+    label "Phone number"
+    value "+1 (212) 456-7890"
+  end
 
   indented_grid do
-    subheading 'TODO describe how to use your plugin'
-
     attach :code, file: __FILE__
   end
 end
