@@ -4,8 +4,10 @@ class PhoneNumberField {
         this.mdcWrapperElement = this.element.querySelector('.mdc-text-field')
         this.input = this.element.querySelector('.mdc-text-field__input')
         this.originalName = this.input.name
+        this.originalValue = this.input.value
         this.input.name = `${this.input.name}_raw`
         this.label = this.element.querySelector("label")
+        this.mdcWrapperElement.vComponent.isDirty = this.isDirty.bind(this)
 
         this.intlTelInput = window.intlTelInput(this.input, {
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.5/build/js/utils.js",
@@ -66,5 +68,12 @@ class PhoneNumberField {
     reset() {
         this.input.value = this.input.vComponent.originalValue
         this.intlTelInput.setNumber(this.input.value)
+    }
+
+    isDirty() {
+        const current = this.intlTelInput.getNumber()
+        const original = intlTelInputUtils.formatNumber(this.originalValue)
+
+        return current.localeCompare(original) != 0
     }
 }
