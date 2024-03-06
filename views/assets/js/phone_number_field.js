@@ -5,31 +5,32 @@ class PhoneNumberField {
         this.input = this.element.querySelector('.mdc-text-field__input')
         this.originalName = this.input.name
         this.input.name = `${this.input.name}_raw`
+        this.label = this.element.querySelector("label")
 
         this.intlTelInput = window.intlTelInput(this.input, {
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.5/build/js/utils.js",
             dropdownContainer: document.body,
-            autoPlaceholder: "off", // placeholders aren't compatible with Material Design.
+            autoPlaceholder: "off", // Material Design doesn't support placeholders.
             nationalMode: false,
-            showFlags: false, // TODO: emoji flags?
+            showFlags: false,
             showSelectedDialCode: true
         })
         this.mdcWrapperElement.classList.add("mdc-text-field--with-leading-icon")
 
+        // need to adjust the MDC floating label's left offset to account for the country code
+        // picker:
         this.input.addEventListener("countrychange", (event) => {
             this.labelPaddingLeft = getComputedStyle(this.input).paddingLeft
         })
 
-        this.input.addEventListener("focus", (event) => {
-            const label = this.element.querySelector("label")
-            label.style.removeProperty("left")
+        this.input.addEventListener("blur", (event) => {
+            if (!this.input.value) {
+                this.label.style.left = this.labelPaddingLeft
+            }
         })
 
-        this.input.addEventListener("blur", (event) => {
-            const label = this.element.querySelector("label")
-            if (!this.input.value) {
-                label.style.left = this.labelPaddingLeft
-            }
+        this.input.addEventListener("focus", (event) => {
+            this.label.style.removeProperty("left")
         })
 
         if (this.input.value) {
@@ -60,5 +61,10 @@ class PhoneNumberField {
 
     prepareSubmit(params) {
         params.push([this.originalName, this.intlTelInput.getNumber()])
+    }
+
+    reset() {
+        this.input.value = this.input.vComponent.originalValue
+        this.intlTelInput.setNumber(this.input.value)
     }
 }
