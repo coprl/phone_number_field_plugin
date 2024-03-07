@@ -6,4 +6,19 @@
   border-radius: unset;
   caret-color: var(--mdc-theme-primary);
   outline-color: var(--mdc-theme-primary);
+  font: inherit;
+}
+
+.iti__country {
+  padding: var(--v-padding1) var(--v-padding2);
+}
+
+.iti__country-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.iti--inline-dropdown .iti__dropdown-content {
+  margin-top: 0;
 }

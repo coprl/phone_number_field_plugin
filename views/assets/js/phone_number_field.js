@@ -35,6 +35,20 @@ class PhoneNumberField {
             this.label.style.removeProperty("left")
         })
 
+        this.input.addEventListener("open:countrydropdown", (event) => {
+            // IntlTelInput seems to not play nice with COPRL's layout when the body is scrolled
+            // beyond the top of the viewport, so manually adjust the dropdown container:
+            const isFullScreen = this.intlTelInput.dropdown.classList.contains("iti--fullscreen-popup")
+
+            if (isFullScreen) {
+                return
+            }
+
+            const rect = this.element.getBoundingClientRect()
+
+            this.intlTelInput.dropdown.style.top = `${rect.bottom}px`
+        })
+
         if (this.input.value) {
             this.intlTelInput.setNumber(this.input.value)
         }
