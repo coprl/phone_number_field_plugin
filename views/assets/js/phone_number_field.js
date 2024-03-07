@@ -76,4 +76,8 @@ class PhoneNumberField {
 
         return current.localeCompare(original) != 0
     }
+
+    destroy() {
+        this.intlTelInput.destroy()
+    }
 }
