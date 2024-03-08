@@ -6,10 +6,7 @@ module Coprl
           attr_reader :locale, :default_country
 
           def initialize(**attributes, &block)
-            attributes = {
-              behavior: :tel,
-              auto_complete: "tel-national"
-            }.merge(attributes)
+            attributes = {behavior: :tel, auto_complete: :tel}.merge(attributes)
 
             super(type: :phone_number_field, **attributes, &block)
 
