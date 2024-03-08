@@ -86,6 +86,10 @@ class PhoneNumberField {
             return {[this.input.id]: this.input.validationMessage}
         }
 
+        if (!this.input.value && !this.input.required) {
+            return true
+        }
+
         // https://github.com/jackocnr/intl-tel-input/blob/d6552cbb95172e81a79b3b528a5a350c8db1db33/src/js/utils.js#L177-L185
         switch (this.intlTelInput.getValidationError()) {
         case intlTelInputUtils.validationError.IS_POSSIBLE:
