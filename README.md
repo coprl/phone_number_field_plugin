@@ -49,8 +49,23 @@ standard [E.164](https://en.wikipedia.org/wiki/E.164) format.
 
 ## Configuration
 
-The plugin has no configurable options, but accepts any attributes a standard COPRL `text_field`
-does.
+`phone_number_field` supports the following additional options:
+
+* `locale`: A region or region-language locale identifier, such as `:en` or `"ja-JP"`, that controls
+  in what language country names and other strings appear. If absent, locale is determined from the
+  browser via the [`Intl` API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+* `default_country`: An ISO 3166 alpha-2 country code, such as `:us` or `"CA"`, used as the
+  initially selected country code when the field has no initial value. If absent, no country is
+  selected when the field is empty, and users must specify or select a country code.
+
+For example,
+
+```ruby
+phone_number_field locale: user.preferred_locale || :DE, default_country: user.location.country do
+  label t(:phone_number)
+  value user.phone_number
+end
+```
 
 ## Validation
 

@@ -1,6 +1,8 @@
 <div id="<%= comp.id %>-wrapper"
      class="v-plugin v-plugin--phone_number_field"
      data-plugin-callback="PhoneNumberField"
+     <% if comp.locale %>data-locale="<%= comp.locale %>"<% end %>
+     <% if comp.default_country %>data-default-country="<%= comp.default_country %>"<% end %>
      <%= partial 'components/event', locals: {comp: comp, events: comp.events, parent_id: comp.id} %>>
   <%= partial 'components/text_field', locals: {comp: comp} %>
 </div>
