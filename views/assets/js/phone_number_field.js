@@ -81,6 +81,13 @@ class PhoneNumberField {
         this.updateDropdown()
     }
 
+    onShow() {
+        // updateDropdown won't correctly calculate label and dropdown metrics when the field is
+        // hidden, as getClientBoundingRect() returns all zeros. Update the dropdown when the field
+        // is shown to account for this:
+        this.updateDropdown()
+    }
+
     validate(formData) {
         if (!this.input.reportValidity()) {
             return {[this.input.id]: this.input.validationMessage}
