@@ -67,9 +67,10 @@ class PhoneNumberField {
             this.intlTelInput.dropdown.style.top = `${rect.bottom - 5}px`
         })
 
-        // PhoneNumberField submits a different value than that contained in the named input, so
-        // rename the input field to allow the plugin's value to replace the original in form data:
-        this.input.name = `${this.input.name}_raw`
+        // PhoneNumberField wraps a text field, which also submits params. Since the plugin is
+        // responsible for submitting a value, ensure the enclosed text field doesn't submit
+        // anything:
+        this.input.vComponent.prepareSubmit = () => {}
 
         if (this.input.value) {
             // input may be coming in with or without leading `+`, so normalize and trim:
