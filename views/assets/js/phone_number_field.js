@@ -35,7 +35,8 @@ class PhoneNumberField {
             showFlags: false,
             showSelectedDialCode: true,
             initialCountry: this.element.dataset.defaultCountry,
-            defaultToFirstCountry: Boolean(this.element.dataset.defaultCountry)
+            defaultToFirstCountry: Boolean(this.element.dataset.defaultCountry),
+            useFullscreenPopup: this.isMobile
         })
 
         // need to adjust the MDC floating label's left offset to account for the country code
@@ -46,7 +47,7 @@ class PhoneNumberField {
         this.input.addEventListener("focus", () => this.updateDropdown())
 
         this.input.addEventListener("open:countrydropdown", (event) => {
-            if (this.intlTelInput.useFullscreenPopup) {
+            if (this.isMobile) {
                 return
             }
 
@@ -165,5 +166,11 @@ class PhoneNumberField {
     /** @private */
     get locale() {
         return this.element.dataset.locale || (new Intl.NumberFormat()).resolvedOptions().locale
+    }
+
+    /** @private */
+    get isMobile() {
+        // from IntlTelInput
+        return window.innerWidth <= 500
     }
 }
