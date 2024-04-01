@@ -40,21 +40,10 @@ class PhoneNumberField {
 
         // need to adjust the MDC floating label's left offset to account for the country code
         // picker:
-        this.input.addEventListener("countrychange", (event) => {
-            this.updateDropdown()
-        })
-
-        this.input.addEventListener("input", (event) => {
-            this.updateDropdown()
-        })
-
-        this.input.addEventListener("blur", (event) => {
-            this.updateDropdown()
-        })
-
-        this.input.addEventListener("focus", (event) => {
-            this.updateDropdown()
-        })
+        this.input.addEventListener("countrychange", () => this.updateDropdown())
+        this.input.addEventListener("input", () => this.updateDropdown())
+        this.input.addEventListener("blur", () => this.updateDropdown())
+        this.input.addEventListener("focus", () => this.updateDropdown())
 
         this.input.addEventListener("open:countrydropdown", (event) => {
             if (this.intlTelInput.useFullscreenPopup) {
@@ -63,8 +52,20 @@ class PhoneNumberField {
 
             // IntlTelInput seems to not play nice with COPRL's layout when the body is scrolled
             // beyond the top of the viewport, so manually adjust the dropdown container:
-            const rect = this.element.getBoundingClientRect()
-            this.intlTelInput.dropdown.style.top = `${rect.bottom - 5}px`
+            const elementRect = this.element.getBoundingClientRect()
+            const dropdownRect = this.intlTelInput.dropdown.querySelector(".iti__dropdown-content").getBoundingClientRect()
+            const scrollBottom = document.scrollingElement.scrollTop + window.innerHeight
+
+            if (dropdownRect.bottom > scrollBottom) {
+                this.intlTelInput.dropdown.style.top = `${elementRect.top + 5}px`
+                this.intlTelInput.dropdown.classList.add("iti--inline-dropdown--flipped")
+            } else {
+                this.intlTelInput.dropdown.style.top = `${elementRect.bottom - 5}px`
+            }
+        })
+
+        this.input.addEventListener("close:countrydropdown", (event) => {
+            this.intlTelInput.dropdown.classList.remove("iti--inline-dropdown--flipped")
         })
 
         // PhoneNumberField wraps a text field, which also submits params. Since the plugin is
