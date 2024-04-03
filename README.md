@@ -45,7 +45,7 @@ a country code directly into the text field. Input is formatted as it is typed a
 format for the current country code.
 
 The plugin submits the field's value normalized and formatted as an international phone number in
-standard [E.164](https://en.wikipedia.org/wiki/E.164) format.
+standard [E.164](https://en.wikipedia.org/wiki/E.164) format, with extension when applicable.
 
 ## Configuration
 

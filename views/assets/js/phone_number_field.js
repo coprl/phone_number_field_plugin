@@ -118,7 +118,14 @@ class PhoneNumberField {
     }
 
     prepareSubmit(params) {
-        params.push([this.originalName, this.intlTelInput.getNumber()])
+        let number = this.intlTelInput.getNumber(0)
+        const extension = this.intlTelInput.getExtension()
+
+        if (extension) {
+            number = `${number} x${extension}`
+        }
+
+        params.push([this.originalName, number])
     }
 
     reset() {
