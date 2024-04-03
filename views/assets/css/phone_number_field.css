@@ -22,3 +22,8 @@
 .iti--inline-dropdown .iti__dropdown-content {
   margin-top: 0;
 }
+
+.iti--inline-dropdown--flipped {
+  display: flex;
+  flex-direction: column-reverse;
+}
